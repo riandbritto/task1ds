@@ -1,0 +1,123 @@
+
+R version 4.3.2 (2023-10-31 ucrt) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #import the dataset
+> library(MASS)
+> getwd()
+[1] "C:/Users/ADMIN/Desktop"
+> setwd("C:/Users/ADMIN/Documents")
+> data=read.csv("C:/Users/ADMIN/Desktop/studyhours1.csv")
+> data
+   Hours Scores
+1    2.5     21
+2    5.1     47
+3    3.2     27
+4    8.5     75
+5    3.5     30
+6    1.5     20
+7    9.2     88
+8    5.5     60
+9    8.3     81
+10   2.7     25
+11   7.7     85
+12   5.9     62
+13   4.5     41
+14   3.3     42
+15   1.1     17
+16   8.9     95
+17   2.5     30
+18   1.9     24
+19   6.1     67
+20   7.4     69
+21   2.7     30
+22   4.8     54
+23   3.8     35
+24   6.9     76
+25   7.8     86
+> head(data)
+  Hours Scores
+1   2.5     21
+2   5.1     47
+3   3.2     27
+4   8.5     75
+5   3.5     30
+6   1.5     20
+> #summary of data
+> summary(data)
+     Hours           Scores     
+ Min.   :1.100   Min.   :17.00  
+ 1st Qu.:2.700   1st Qu.:30.00  
+ Median :4.800   Median :47.00  
+ Mean   :5.012   Mean   :51.48  
+ 3rd Qu.:7.400   3rd Qu.:75.00  
+ Max.   :9.200   Max.   :95.00  
+> #assigning variables to the data
+> hours=data$Hours
+> scores=data$Scores
+> #fitting the model
+> model=lm(scores~hours)
+> model
+
+Call:
+lm(formula = scores ~ hours)
+
+Coefficients:
+(Intercept)        hours  
+      2.484        9.776  
+
+> #plotting the model
+> plot(hours,scores,main="Hour vs Score",xlab="Hour Studied",ylab="scores",col="black")
+> abline(model,col="red")
+> actual=scores
+> #camparison between actual and predicted scores
+> hours=data.frame(hours)
+> predicted=predict(model,hours)
+> cbind(actual,predicted)
+   actual predicted
+1      21  26.92318
+2      47  52.34027
+3      27  33.76624
+4      75  85.57800
+5      30  36.69899
+6      20  17.14738
+7      88  92.42106
+8      60  56.25059
+9      81  83.62284
+10     25  28.87834
+11     85  77.75736
+12     62  60.16091
+13     41  46.47479
+14     42  34.74382
+15     17  13.23706
+16     95  89.48832
+17     30  26.92318
+18     24  21.05770
+19     67  62.11607
+20     69  74.82462
+21     30  28.87834
+22     54  49.40753
+23     35  39.63173
+24     76  69.93672
+25     86  78.73494
+> #predicted score if student studied for 9.25hrs/day
+> test=data.frame(hours=9.25)
+> predict(model,test)
+       1 
+92.90985 
+> 
